@@ -1,0 +1,26 @@
+node {
+    echo "jenkins url is :${env.JENKINS_URL}"
+echo "node name is :${env.NODE_NAME}"
+    properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '5', daysToKeepStr: '', numToKeepStr: '5')), [$class: 'JobLocalConfiguration', changeReasonComment: ''], pipelineTriggers([pollSCM('* * * * *')])])
+def mavenhome= tool name:"maven3.8.6"
+stage('chekoutcode'){
+git branch: 'development', credentialsId: '80b6e311-895e-4e16-afb1-bf57b7a1b124', url: 'https://github.com/rss-april/maven-web-application.git'
+}
+stage('build'){
+sh "${mavenhome}/bin/mvn clean package"
+}
+stage('executesonarqubereport')
+{
+sh "${mavenhome}/bin/mvn clean sonar:sonar"
+}
+stage('uploadartifatsintoartifactoryrepo')
+{
+sh "${mavenhome}/bin/mvn clean deploy"
+}
+stage ('deployappintotomcatserver')
+{
+sshagent(['103852cb-6fe0-419e-be7e-761e40a108ca']) {
+    sh"scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@172.31.10.45:/opt/apache-tomcat-9.0.65/webapps/"
+	}
+}
+}
