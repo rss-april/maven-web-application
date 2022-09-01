@@ -27,7 +27,7 @@ sshagent(['103852cb-6fe0-419e-be7e-761e40a108ca']) {
 }
 }
 catch (e) {
-  notifyBuild(currentBuild.result)
+  notifyBuild('FAILED')
     throw e
   } finally {
     // Success or failure, always send notifications
