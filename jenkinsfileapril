@@ -11,7 +11,7 @@ git branch: 'development', credentialsId: '80b6e311-895e-4e16-afb1-bf57b7a1b124'
 stage('build'){
 sh "${mavenhome}/bin/mvn clean package"
 }
-/*stage('executesonarqubereport')
+stage('executesonarqubereport')
 {
 sh "${mavenhome}/bin/mvn clean sonar:sonar"
 }
@@ -24,7 +24,7 @@ stage ('deployappintotomcatserver')
 sshagent(['103852cb-6fe0-419e-be7e-761e40a108ca']) {
     sh"scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@172.31.10.45:/opt/apache-tomcat-9.0.65/webapps/"
 	}
-}*/
+}
 }
 catch (e) {
   notifyBuild(currentBuild.result)
