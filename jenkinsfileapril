@@ -17,7 +17,7 @@ sh "${mavenhome}/bin/mvn clean sonar:sonar"
 }
 stage('uploadartifatsintoartifactoryrepo')
 {
-sh "${mavenhome}/bin/mvn clean deploy"
+sh "${mavenhome}/bin/mvn clean deploy1"
 }
 stage ('deployappintotomcatserver')
 {
