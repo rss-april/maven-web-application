@@ -5,7 +5,6 @@ echo "node name is :${env.NODE_NAME}"
 def mavenhome= tool name:"maven3.8.6"
 try{
 notifyBuild('STARTED')
-}
 stage('chekoutcode'){
 git branch: 'development', credentialsId: '80b6e311-895e-4e16-afb1-bf57b7a1b124', url: 'https://github.com/rss-april/maven-web-application.git'
 }
