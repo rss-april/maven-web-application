@@ -1,3 +1,4 @@
+@Library _
 node {
     def mavenhome=tool name:"maven3.8.6"
     properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '5', daysToKeepStr: '', numToKeepStr: '5')), [$class: 'JobLocalConfiguration', changeReasonComment: ''], pipelineTriggers([pollSCM('* * * * *')])])
@@ -6,7 +7,7 @@ node {
         git branch: 'development', credentialsId: '80b6e311-895e-4e16-afb1-bf57b7a1b124', url: 'https://github.com/rss-april/maven-web-application.git'
     }
     try{
-    notifyBuild('STARTED')
+    sendlacknotifications('STARTED')
     stage('build'){
         sh "${mavenhome}/bin/mvn clean package"
     }
@@ -23,11 +24,11 @@ node {
     }
     }//try closing
     catch (e){
-   notifyBuild('FAILED')
+   sendlacknotifications('FAILED')
    throw e
   } finally {
     // Success or failure, always send notifications
-    notifyBuild(currentBuild.result)
+    sendlacknotifications(currentBuild.result)
   }
     
 }//node closing
