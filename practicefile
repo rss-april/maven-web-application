@@ -7,7 +7,7 @@ node {
         git branch: 'development', credentialsId: '80b6e311-895e-4e16-afb1-bf57b7a1b124', url: 'https://github.com/rss-april/maven-web-application.git'
     }
     try{
-    sendlacknotifications('STARTED')
+    sendSlackNotifications('STARTED')
     stage('build'){
         sh "${mavenhome}/bin/mvn clean package"
     }
@@ -24,11 +24,11 @@ node {
     }
     }//try closing
     catch (e){
-   sendlacknotifications('FAILED')
+    sendSlackNotifications('FAILED')
    throw e
   } finally {
     // Success or failure, always send notifications
-    sendlacknotifications(currentBuild.result)
+     sendSlackNotifications(currentBuild.result)
   }
     
 }//node closing
