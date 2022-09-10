@@ -18,7 +18,7 @@ node {
     }
     stage('deployintotomcat'){
         sshagent(['91ca626c-4ea5-47bc-b5f2-d16e35b99b64']) {
-    sh "scp -o strictHostKeyChecking=no target/maven-web-application.war ec2-user@3.110.176.140:/opt/apache-tomcat-9.0.65/webapps/"
+    sh "scp -o strictHostKeyChecking=no target/maven-web-application.war ec2-user@3.109.213.128:/opt/apache-tomcat-9.0.65/webapps/"
 }
     }
     }//try closing
@@ -31,7 +31,7 @@ node {
   }
     
 }//node closing
-//code snippet for sending slack notifications
+/* //code snippet for sending slack notifications
 def notifyBuild(String buildStatus = 'STARTED') {
   // build status of null means successful
   buildStatus =  buildStatus ?: 'SUCCESSFUL'
@@ -56,4 +56,4 @@ def notifyBuild(String buildStatus = 'STARTED') {
 
   // Send notifications
   slackSend (color: colorCode, message: summary, channel:"#chetan")
-}
+}*/
