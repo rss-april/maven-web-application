@@ -14,7 +14,7 @@ node {
         sh "${mavenhome}/bin/mvn clean sonar:sonar package"
     }
     stage('uploadintonexus'){
-        sh "${mavenhome}/bin/mvn clean deploy1"
+        sh "${mavenhome}/bin/mvn clean deploy"
     }
     stage('deployintotomcat'){
         sshagent(['91ca626c-4ea5-47bc-b5f2-d16e35b99b64']) {
