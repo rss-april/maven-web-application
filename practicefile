@@ -23,7 +23,7 @@ node {
     }
     }//try closing
     catch (e){
-   notifyBuild(currentBuild.result)
+   notifyBuild('FAILED')
    throw e
   } finally {
     // Success or failure, always send notifications
