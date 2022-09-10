@@ -5,6 +5,7 @@ node {
     stage('checkout'){
         git branch: 'development', credentialsId: '80b6e311-895e-4e16-afb1-bf57b7a1b124', url: 'https://github.com/rss-april/maven-web-application.git'
     }
+    try{
     stage('build'){
         sh "${mavenhome}/bin/mvn clean package"
     }
@@ -19,7 +20,16 @@ node {
     sh "scp -o strictHostKeyChecking=no target/maven-web-application.war ec2-user@3.110.176.140:/opt/apache-tomcat-9.0.65/webapps/"
 }
     }
-}
+    }//try closing
+    catch (e){
+   notifyBuild(currentBuild.result)
+   throw e
+  } finally {
+    // Success or failure, always send notifications
+    notifyBuild(currentBuild.result)
+  }
+    
+}//node closing
 //code snippet for sending slack notifications
 def notifyBuild(String buildStatus = 'STARTED') {
   // build status of null means successful
